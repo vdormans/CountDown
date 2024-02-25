@@ -89,13 +89,13 @@ body{
 <div id="timer">
 
     <div class="dias"> 
-        <div id="dias" class="numbers "> </div>days</div> 
+        <div id="dias" class="numbers "> </div>dias</div> 
       <div class="horas"> 
-        <div  id="horas" class="numbers"> </div>hours</div> 
+        <div  id="horas" class="numbers"> </div>horas</div> 
       <div class="minutos"> 
-        <div  id="minutos" class="numbers"> </div>minutes</div> 
+        <div  id="minutos" class="numbers"> </div>minutos</div> 
       <div   class="segundos"> 
-        <div id="segundos" class="numbers"> </div>seconds</div> 
+        <div id="segundos" class="numbers"> </div>segundos</div> 
       </div>
 
 </div>
@@ -122,10 +122,10 @@ let timer = setInterval(function() {
   let segundos = Math.floor((diff % (1000 * 60)) / 1000);
 
   // display
-  document.getElementById("days").innerHTML=days
-  document.getElementById("hours").innerHTML=hours
-  document.getElementById("minutes").innerHTML=minutes
-  document.getElementById("seconds").innerHTML=seconds
+  document.getElementById("dias").innerHTML=dias
+  document.getElementById("horas").innerHTML=horas
+  document.getElementById("minutos").innerHTML=minutos
+  document.getElementById("segundos").innerHTML=segundos
 
 
 
