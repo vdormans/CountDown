@@ -116,10 +116,10 @@ let timer = setInterval(function() {
   const diff = myDate - today;
 
   // math
-  let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  let seconds = Math.floor((diff % (1000 * 60)) / 1000);
+  let dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+  let horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  let minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  let segundos = Math.floor((diff % (1000 * 60)) / 1000);
 
   // display
   document.getElementById("days").innerHTML=days
