@@ -53,7 +53,7 @@
     var semanas = Math.floor((tiempoRestante % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24 * 7));
     var dias = Math.floor((tiempoRestante % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));
     
-    document.getElementById('meses').innerHTML = meses + " Meses";
+    document.getElementById('meses').innerHTML = meses;
     document.getElementById('semanas').innerHTML = semanas + " Semanas";
     document.getElementById('dias').innerHTML = dias + " Días";
   }
