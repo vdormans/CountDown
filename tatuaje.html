@@ -16,7 +16,7 @@
     border: 2px solid white;
     border-radius: 10px;
     padding: 20px;
-    width: 300px;
+    width: 400px;
     height: 70px;
     margin: 0 auto;
     display: flex;
@@ -57,7 +57,7 @@
 <body>
 
 <div class="countdown">
-  <h1>Cumple Viviana</h1>
+  <h1>work countdown</h1>
   <div class="group">
     <h3 id="meses"></h3>
     <h5>Meses</h5>
@@ -72,11 +72,16 @@
     <h3 id="dias"></h3>
     <h5>Días</h5>
   </div>
+  <span class="separator">|</span>
+  <div class="group">
+    <h3 id="horas"></h3>
+    <h5>Horas</h5>
+  </div>
 </div>
 
 <script>
   // Fecha de finalización del conteo regresivo (año, mes (0-11), día)
-  var fechaFinal = new Date(2025, 3, 15); // 30 de mayo de 2024
+  var fechaFinal = new Date(2024, 4, 30); // 30 de mayo de 2024
   
   function actualizarCuentaRegresiva() {
     var ahora = new Date();
@@ -85,10 +90,12 @@
     var meses = Math.floor(tiempoRestante / (1000 * 60 * 60 * 24 * 30));
     var semanas = Math.floor((tiempoRestante % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24 * 7));
     var dias = Math.floor((tiempoRestante % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));
+    var horas = Math.floor((tiempoRestante % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     
     document.getElementById('meses').innerHTML = meses;
     document.getElementById('semanas').innerHTML = semanas;
     document.getElementById('dias').innerHTML = dias;
+    document.getElementById('horas').innerHTML = horas;
   }
   
   setInterval(actualizarCuentaRegresiva, 1000);
