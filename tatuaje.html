@@ -13,8 +13,7 @@
     padding-top: 50px;
   }
   .countdown {
-    border: 2px solid white;
-    border-radius: 10px;
+    border: none;
     padding: 20px;
     width: 300px;
     margin: 0 auto;
@@ -40,7 +39,7 @@
     <span id="semanas"></span> Semanas
   </div>
   <div class="timer">
-    <span id="dias"></span> Días
+    <span id="dias"></span> Dias
   </div>
 </div>
 
@@ -58,7 +57,7 @@
     
     document.getElementById('meses').innerHTML = meses;
     document.getElementById('semanas').innerHTML = semanas;
-    document.getElementById('dias').innerHTML = días;
+    document.getElementById('dias').innerHTML = dias;
   }
   
   setInterval(updateCountdown, 1000);
