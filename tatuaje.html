@@ -16,29 +16,43 @@
     border: 2px solid white;
     border-radius: 10px;
     padding: 20px;
-    width: 1080px;
-    height: 900px;
+    width: 300px;
+    height: 70px;
     margin: 0 auto;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
   }
-  .group {
-    flex-basis: 30%;
-  }
-  .group h3 {
-    font-size: 36px;
+  h1 {
+    font-size: 16px;
+    font-weight: normal;
+    font-style: italic;
     margin-bottom: 10px;
   }
-  .group h5 {
+  .group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .group h3 {
     font-size: 24px;
-    margin-bottom: 20px;
+    font-weight: bold;
+    margin: 0;
+    margin-right: 5px;
+  }
+  .group h5 {
+    font-size: 16px;
+    font-style: italic;
+    margin: 0;
   }
 </style>
 </head>
 <body>
 
 <div class="countdown">
+  <h1>work countdown</h1>
   <div class="group">
     <h3 id="meses"></h3>
     <h5>Meses</h5>
