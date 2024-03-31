@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Countdown Tatuaje</title>
+<title>Countdown</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -13,17 +13,19 @@
     padding-top: 50px;
   }
   .countdown {
-    border: none;
+    border: 2px solid white;
+    border-radius: 10px;
     padding: 20px;
-    width: 300px;
+    width: 1080px;
+    height: 900px;
     margin: 0 auto;
   }
   .countdown h1 {
-    font-size: 24px;
+    font-size: 36px;
     margin-bottom: 20px;
   }
   .countdown .timer {
-    font-size: 20px;
+    font-size: 24px;
     margin-bottom: 10px;
   }
 </style>
@@ -31,29 +33,33 @@
 <body>
 
 <div class="countdown">
-  <h1>Work Countdown</h1>
+  <h1>Cuenta Regresiva</h1>
   <div class="timer">
-    <span id="time"></span>
+    <span id="meses"></span> Meses |
+    <span id="semanas"></span> Semanas |
+    <span id="dias"></span> Días
   </div>
 </div>
 
 <script>
   // Fecha de finalización del conteo regresivo (año, mes (0-11), día)
-  var endDate = new Date(2024, 4, 30); // 30 de mayo de 2024
+  var fechaFinal = new Date(2024, 4, 30); // 30 de mayo de 2024
   
-  function updateCountdown() {
-    var now = new Date();
-    var timeLeft = endDate - now;
+  function actualizarCuentaRegresiva() {
+    var ahora = new Date();
+    var tiempoRestante = fechaFinal - ahora;
     
-    var meses = Math.floor(timeLeft / (1000 * 60 * 60 * 24 * 30));
-    var semanas = Math.floor((timeLeft % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24 * 7));
-    var dias = Math.floor((timeLeft % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));
+    var meses = Math.floor(tiempoRestante / (1000 * 60 * 60 * 24 * 30));
+    var semanas = Math.floor((tiempoRestante % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24 * 7));
+    var dias = Math.floor((tiempoRestante % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));
     
-    document.getElementById('time').innerHTML = meses + " | " + semanas + " | " + dias;
+    document.getElementById('meses').innerHTML = meses + " Meses";
+    document.getElementById('semanas').innerHTML = semanas + " Semanas";
+    document.getElementById('dias').innerHTML = dias + " Días";
   }
   
-  setInterval(updateCountdown, 1000);
-  updateCountdown(); // Actualiza la cuenta regresiva al cargar la página
+  setInterval(actualizarCuentaRegresiva, 1000);
+  actualizarCuentaRegresiva(); // Actualiza la cuenta regresiva al cargar la página
 </script>
 
 </body>
