@@ -16,8 +16,8 @@
     border: 2px solid white;
     border-radius: 10px;
     padding: 20px;
-    width: 900px;
-    height: 400px;
+    width: 500px;
+    height: 100px;
     margin: 0 auto;
   }
   .countdown h1 {
@@ -54,8 +54,8 @@
     var dias = Math.floor((tiempoRestante % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));
     
     document.getElementById('meses').innerHTML = meses;
-    document.getElementById('semanas').innerHTML = semanas + " Semanas";
-    document.getElementById('dias').innerHTML = dias + " Días";
+    document.getElementById('semanas').innerHTML = semanas;
+    document.getElementById('dias').innerHTML = dias;
   }
   
   setInterval(actualizarCuentaRegresiva, 1000);
