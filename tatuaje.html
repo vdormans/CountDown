@@ -19,12 +19,18 @@
     width: 300px;
     height: 70px;
     margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
-  .countdown h3 {
+  .group {
+    flex-basis: 30%;
+  }
+  .group h3 {
     font-size: 36px;
     margin-bottom: 10px;
   }
-  .countdown h5 {
+  .group h5 {
     font-size: 24px;
     margin-bottom: 20px;
   }
@@ -33,12 +39,18 @@
 <body>
 
 <div class="countdown">
-  <h3 id="meses"></h3>
-  <h5>Meses</h5>
-  <h3 id="semanas"></h3>
-  <h5>Semanas</h5>
-  <h3 id="dias"></h3>
-  <h5>Días</h5>
+  <div class="group">
+    <h3 id="meses"></h3>
+    <h5>Meses</h5>
+  </div>
+  <div class="group">
+    <h3 id="semanas"></h3>
+    <h5>Semanas</h5>
+  </div>
+  <div class="group">
+    <h3 id="dias"></h3>
+    <h5>Días</h5>
+  </div>
 </div>
 
 <script>
