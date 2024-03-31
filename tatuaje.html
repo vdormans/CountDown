@@ -47,9 +47,9 @@
     
     var meses = Math.floor(timeLeft / (1000 * 60 * 60 * 24 * 30));
     var semanas = Math.floor((timeLeft % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24 * 7));
-    var días = Math.floor((timeLeft % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));
+    var dias = Math.floor((timeLeft % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));
     
-    document.getElementById('time').innerHTML = meses + " | " + semanas + " | " + días;
+    document.getElementById('time').innerHTML = meses + " | " + semanas + " | " + dias;
   }
   
   setInterval(updateCountdown, 1000);
