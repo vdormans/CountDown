@@ -10,36 +10,35 @@
     background-color: #262626;
     color: white;
     text-align: center;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding-top: 50px;
   }
   .countdown {
     border: 2px solid white;
     border-radius: 10px;
     padding: 20px;
-    width: 500px;
-    height: 100px;
+    width: 300px;
+    height: 70px;
     margin: 0 auto;
   }
-  .countdown h1 {
+  .countdown h3 {
     font-size: 36px;
-    margin-bottom: 20px;
-  }
-  .countdown .timer {
-    font-size: 24px;
     margin-bottom: 10px;
+  }
+  .countdown h5 {
+    font-size: 24px;
+    margin-bottom: 20px;
   }
 </style>
 </head>
 <body>
 
 <div class="countdown">
-  <h1>Cuenta Regresiva</h1>
-  <div class="timer">
-    <span id="meses"></span> Meses |
-    <span id="semanas"></span> Semanas |
-    <span id="dias"></span> Días
-  </div>
+  <h3 id="meses"></h3>
+  <h5>Meses</h5>
+  <h3 id="semanas"></h3>
+  <h5>Semanas</h5>
+  <h3 id="dias"></h3>
+  <h5>Días</h5>
 </div>
 
 <script>
