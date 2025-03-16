@@ -13,6 +13,7 @@
             height: 100vh;
             margin: 0;
             background-color: transparent;
+            color: white;
         }
         
         .countdown-container {
@@ -23,7 +24,6 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 10px;
             padding: 20px;
-            color: white;
         }
         
         .message {
@@ -66,12 +66,40 @@
             background-color: white;
             margin: 0 5px;
         }
+        
+        .config-panel {
+            margin-top: 20px;
+            padding: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            display: none;
+        }
+        
+        .config-panel input, .config-panel button {
+            margin: 5px;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        
+        .config-panel button {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid white;
+            cursor: pointer;
+        }
+        
+        .config-toggle {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <div class="countdown-container">
         <div class="message">
-            <span id="custom-message">Cumple Mimiana</span>
+            <span id="custom-message">Cumple Viviana</span>
             <span class="heart">♡</span>
         </div>
         <div class="timer">
@@ -101,14 +129,82 @@
                 <div class="time-label">Horas</div>
             </div>
         </div>
+        
+        <div class="config-toggle" onclick="toggleConfig()">Configurar</div>
+        
+        <div id="config-panel" class="config-panel">
+            <div>
+                <label for="event-name">Mensaje:</label>
+                <input type="text" id="event-name" placeholder="Ej: Cumple Viviana">
+            </div>
+            <div>
+                <label for="target-date">Fecha meta:</label>
+                <input type="date" id="target-date">
+            </div>
+            <div>
+                <label for="target-time">Hora (opcional):</label>
+                <input type="time" id="target-time">
+            </div>
+            <button onclick="applySettings()">Aplicar</button>
+            <button onclick="toggleConfig()">Cerrar</button>
+        </div>
     </div>
 
     <script>
+        let targetDate = new Date(2025, 3, 15, 0, 0, 0);
+        
+        // Function to toggle configuration panel
+        function toggleConfig() {
+            const configPanel = document.getElementById('config-panel');
+            if (configPanel.style.display === 'block') {
+                configPanel.style.display = 'none';
+            } else {
+                configPanel.style.display = 'block';
+                
+                // Pre-fill current values
+                const currentMessage = document.getElementById('custom-message').textContent;
+                document.getElementById('event-name').value = currentMessage;
+                
+                // Format date for the input
+                const year = targetDate.getFullYear();
+                const month = String(targetDate.getMonth() + 1).padStart(2, '0');
+                const day = String(targetDate.getDate()).padStart(2, '0');
+                document.getElementById('target-date').value = `${year}-${month}-${day}`;
+                
+                // Format time for the input
+                const hours = String(targetDate.getHours()).padStart(2, '0');
+                const minutes = String(targetDate.getMinutes()).padStart(2, '0');
+                document.getElementById('target-time').value = `${hours}:${minutes}`;
+            }
+        }
+        
+        // Function to apply settings
+        function applySettings() {
+            // Get new message
+            const newMessage = document.getElementById('event-name').value;
+            if (newMessage) {
+                document.getElementById('custom-message').textContent = newMessage;
+            }
+            
+            // Get new date
+            const dateInput = document.getElementById('target-date').value;
+            const timeInput = document.getElementById('target-time').value || '00:00';
+            
+            if (dateInput) {
+                const [year, month, day] = dateInput.split('-').map(num => parseInt(num));
+                const [hours, minutes] = timeInput.split(':').map(num => parseInt(num));
+                
+                // JavaScript months are 0-indexed
+                targetDate = new Date(year, month - 1, day, hours, minutes, 0);
+                updateCountdown();
+            }
+            
+            // Hide config panel
+            document.getElementById('config-panel').style.display = 'none';
+        }
+        
         // Function to update the countdown timer
         function updateCountdown() {
-            // Set your target date here (Year, Month(0-11), Day, Hour, Minute, Second)
-            const targetDate = new Date(2025, 3, 15, 0, 0, 0);
-            
             // Get current date and time
             const currentDate = new Date();
             
@@ -148,27 +244,14 @@
             document.getElementById('hours').textContent = hours;
         }
         
-        // Set custom message
-        function setCustomMessage(message) {
-            document.getElementById('custom-message').textContent = message;
-        }
-        
-        // Set custom target date
-        function setCustomTargetDate(year, month, day, hour = 0) {
-            // Note: month is 0-indexed (0 = January, 11 = December)
-            targetDate = new Date(2025, 2, 17, 12, 15, 0);
-            updateCountdown();
-        }
-        
         // Initialize countdown
         updateCountdown();
         
         // Update countdown every hour
         setInterval(updateCountdown, 3600000);
         
-        // For more frequent updates, use a shorter interval
-        // For example, to update every second:
-        // setInterval(updateCountdown, 1000);
+        // For more frequent updates (every second)
+        setInterval(updateCountdown, 1000);
     </script>
 </body>
 </html>
