@@ -13,7 +13,6 @@
             height: 100vh;
             margin: 0;
             background-color: transparent;
-            color: white;
         }
         
         .countdown-container {
@@ -24,6 +23,7 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 10px;
             padding: 20px;
+            color: white;
         }
         
         .message {
@@ -66,34 +66,6 @@
             background-color: white;
             margin: 0 5px;
         }
-        
-        .config-panel {
-            margin-top: 20px;
-            padding: 10px;
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
-            display: none;
-        }
-        
-        .config-panel input, .config-panel button {
-            margin: 5px;
-            padding: 8px;
-            border-radius: 4px;
-        }
-        
-        .config-panel button {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 1px solid white;
-            cursor: pointer;
-        }
-        
-        .config-toggle {
-            margin-top: 10px;
-            text-align: center;
-            font-size: 0.8rem;
-            cursor: pointer;
-            text-decoration: underline;
-        }
     </style>
 </head>
 <body>
@@ -129,89 +101,50 @@
                 <div class="time-label">Horas</div>
             </div>
         </div>
-        
-        <div class="config-toggle" onclick="toggleConfig()">Configurar</div>
-        
-        <div id="config-panel" class="config-panel">
-            <div>
-                <label for="event-name">Mensaje:</label>
-                <input type="text" id="event-name" placeholder="Ej: Cumple Viviana">
-            </div>
-            <div>
-                <label for="target-date">Fecha meta:</label>
-                <input type="date" id="target-date">
-            </div>
-            <div>
-                <label for="target-time">Hora (opcional):</label>
-                <input type="time" id="target-time">
-            </div>
-            <button onclick="applySettings()">Aplicar</button>
-            <button onclick="toggleConfig()">Cerrar</button>
-        </div>
     </div>
 
     <script>
-        let targetDate = new Date(2025, 3, 15, 0, 0, 0);
+        // ===== CONFIGURACIÓN SENCILLA =====
+        // Modifica estas variables para personalizar el contador
         
-        // Function to toggle configuration panel
-        function toggleConfig() {
-            const configPanel = document.getElementById('config-panel');
-            if (configPanel.style.display === 'block') {
-                configPanel.style.display = 'none';
-            } else {
-                configPanel.style.display = 'block';
-                
-                // Pre-fill current values
-                const currentMessage = document.getElementById('custom-message').textContent;
-                document.getElementById('event-name').value = currentMessage;
-                
-                // Format date for the input
-                const year = targetDate.getFullYear();
-                const month = String(targetDate.getMonth() + 1).padStart(2, '0');
-                const day = String(targetDate.getDate()).padStart(2, '0');
-                document.getElementById('target-date').value = `${year}-${month}-${day}`;
-                
-                // Format time for the input
-                const hours = String(targetDate.getHours()).padStart(2, '0');
-                const minutes = String(targetDate.getMinutes()).padStart(2, '0');
-                document.getElementById('target-time').value = `${hours}:${minutes}`;
-            }
-        }
+        // 1. Mensaje que se mostrará (ejemplo: "Cumple Viviana")
+        const MENSAJE = "Cumple Viviana bb"; 
         
-        // Function to apply settings
-        function applySettings() {
-            // Get new message
-            const newMessage = document.getElementById('event-name').value;
-            if (newMessage) {
-                document.getElementById('custom-message').textContent = newMessage;
-            }
-            
-            // Get new date
-            const dateInput = document.getElementById('target-date').value;
-            const timeInput = document.getElementById('target-time').value || '00:00';
-            
-            if (dateInput) {
-                const [year, month, day] = dateInput.split('-').map(num => parseInt(num));
-                const [hours, minutes] = timeInput.split(':').map(num => parseInt(num));
-                
-                // JavaScript months are 0-indexed
-                targetDate = new Date(year, month - 1, day, hours, minutes, 0);
-                updateCountdown();
-            }
-            
-            // Hide config panel
-            document.getElementById('config-panel').style.display = 'none';
-        }
+        // 2. Fecha objetivo
+        // Formato: Año, Mes (1-12), Día, Hora (opcional), Minutos (opcional)
+        // Nota: En JavaScript los meses van de 0 a 11, pero aquí ya lo ajustamos para que sea más intuitivo (1=Enero, 12=Diciembre)
+        const FECHA = {
+            AÑO: 2025,
+            MES: 3,     // 1=Enero, 2=Febrero, ..., 12=Diciembre
+            DIA: 17,
+            HORA: 12,    // 0-23
+            MINUTOS: 15  // 0-59
+        };
+        // ===== FIN DE CONFIGURACIÓN =====
         
-        // Function to update the countdown timer
+        
+        // Establece el mensaje personalizado
+        document.getElementById('custom-message').textContent = MENSAJE;
+        
+        // Construye la fecha objetivo (restamos 1 al mes para ajustar a la indexación de JavaScript)
+        const targetDate = new Date(
+            FECHA.AÑO, 
+            FECHA.MES - 1, 
+            FECHA.DIA, 
+            FECHA.HORA, 
+            FECHA.MINUTOS, 
+            0
+        );
+        
+        // Función para actualizar el contador
         function updateCountdown() {
-            // Get current date and time
+            // Obtiene la fecha y hora actuales
             const currentDate = new Date();
             
-            // Calculate the difference in milliseconds
+            // Calcula la diferencia en milisegundos
             let timeLeft = targetDate - currentDate;
             
-            // If countdown is over, set everything to zero
+            // Si el contador llegó a cero, establece todo en cero
             if (timeLeft <= 0) {
                 document.getElementById('months').textContent = '0';
                 document.getElementById('weeks').textContent = '0';
@@ -220,11 +153,11 @@
                 return;
             }
             
-            // Calculate months, weeks, days and hours
+            // Calcula meses, semanas, días y horas
             const msPerHour = 1000 * 60 * 60;
             const msPerDay = msPerHour * 24;
             const msPerWeek = msPerDay * 7;
-            const msPerMonth = msPerDay * 30.44; // Average month length
+            const msPerMonth = msPerDay * 30.44; // Longitud promedio de un mes
             
             const months = Math.floor(timeLeft / msPerMonth);
             timeLeft -= months * msPerMonth;
@@ -237,20 +170,17 @@
             
             const hours = Math.floor(timeLeft / msPerHour);
             
-            // Update the HTML
+            // Actualiza el HTML
             document.getElementById('months').textContent = months;
             document.getElementById('weeks').textContent = weeks;
             document.getElementById('days').textContent = days;
             document.getElementById('hours').textContent = hours;
         }
         
-        // Initialize countdown
+        // Inicializa el contador
         updateCountdown();
         
-        // Update countdown every hour
-        setInterval(updateCountdown, 3600000);
-        
-        // For more frequent updates (every second)
+        // Actualiza el contador cada segundo
         setInterval(updateCountdown, 1000);
     </script>
 </body>
