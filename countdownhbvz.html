@@ -1,145 +1,174 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700|Montserrat:900">
-    <title>Cumple Vivi ♡</title>
+    <title>Countdown Timer</title>
     <style>
-
-body{
-    background-color: none;
-}
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: transparent;
+        }
         
-#timer {
-  color: #eeeeee;
-  text-align: center;
-  text-transform: uppercase;
-  font-family: 'Roboto', sans-serif;
-  font-size: .7em;
-  letter-spacing: 5px;
-}
-
-#etiqueta {
-  color: #ffffff;
-  text-align: center;
-  font-family: 'Quintessential', serif;
-}
-
-.dias, .horas, .minutos, .segundos {
-  display: inline-block;
-  padding: 20px;
-  margin: 5px;
-  width: 100px;
-  border-radius: 5px;
-}
-
-.dias {
-  background: #262626;
-}
-
-.horas {
-  background: #262626;
-}
-
-.minutos {
-  background: #262626;
-}
-
-.segundos {
-  background: #262626;
-}
-
-.numbers {
-  font-family: 'Montserrat', sans-serif;
-  color:  #ffffff;
-  font-size: 4em;
-  text-align: center;
-}
-
-.white {
-  position: absolute;
-  background:  #eeeeee;
-  height: 85px;
-  width: 75px;
-  left: 30%;
-  top: 2%;
-}
-
-.red {
-  position: absolute;
-  background:  #EF2F3C;
-  left: 18%;
-  top: 9%;
-  height: 65px;
-  width: 70px;
- 
-}
-
-.blue {
-  position: absolute;
-  background:  #276FBF;
-  height: 80px;
-  width: 80px;
-  left: 60%;
-  top: 5%;
-
-
-}
-
-
+        .countdown-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            color: white;
+        }
+        
+        .message {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .heart {
+            margin-left: 5px;
+        }
+        
+        .timer {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .time-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .time-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .time-label {
+            font-size: 0.8rem;
+        }
+        
+        .separator {
+            height: 40px;
+            width: 1px;
+            background-color: white;
+            margin: 0 5px;
+        }
     </style>
 </head>
 <body>
+    <div class="countdown-container">
+        <div class="message">
+            <span id="custom-message">Cumple Viviana</span>
+            <span class="heart">♡</span>
+        </div>
+        <div class="timer">
+            <div class="time-section">
+                <div id="months" class="time-value">0</div>
+                <div class="time-label">Meses</div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <div class="time-section">
+                <div id="weeks" class="time-value">0</div>
+                <div class="time-label">Semanas</div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <div class="time-section">
+                <div id="days" class="time-value">0</div>
+                <div class="time-label">Días</div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <div class="time-section">
+                <div id="hours" class="time-value">0</div>
+                <div class="time-label">Horas</div>
+            </div>
+        </div>
+    </div>
 
- <div id="etiqueta">
-    <h3>
-        Cumpleaños Vivi ♡
-    </h3>
-    
-<div id="timer">
-
-    <div class="dias"> 
-        <div id="dias" class="numbers "> </div>dias</div> 
-      <div class="horas"> 
-        <div  id="horas" class="numbers"> </div>horas</div> 
-      <div class="minutos"> 
-        <div  id="minutos" class="numbers"> </div>minutos</div> 
-      <div   class="segundos"> 
-        <div id="segundos" class="numbers"> </div>segundos</div> 
-      </div>
-
-</div>
-
+    <script>
+        // Function to update the countdown timer
+        function updateCountdown() {
+            // Set your target date here (Year, Month(0-11), Day, Hour, Minute, Second)
+            const targetDate = new Date(2025, 3, 15, 0, 0, 0);
+            
+            // Get current date and time
+            const currentDate = new Date();
+            
+            // Calculate the difference in milliseconds
+            let timeLeft = targetDate - currentDate;
+            
+            // If countdown is over, set everything to zero
+            if (timeLeft <= 0) {
+                document.getElementById('months').textContent = '0';
+                document.getElementById('weeks').textContent = '0';
+                document.getElementById('days').textContent = '0';
+                document.getElementById('hours').textContent = '0';
+                return;
+            }
+            
+            // Calculate months, weeks, days and hours
+            const msPerHour = 1000 * 60 * 60;
+            const msPerDay = msPerHour * 24;
+            const msPerWeek = msPerDay * 7;
+            const msPerMonth = msPerDay * 30.44; // Average month length
+            
+            const months = Math.floor(timeLeft / msPerMonth);
+            timeLeft -= months * msPerMonth;
+            
+            const weeks = Math.floor(timeLeft / msPerWeek);
+            timeLeft -= weeks * msPerWeek;
+            
+            const days = Math.floor(timeLeft / msPerDay);
+            timeLeft -= days * msPerDay;
+            
+            const hours = Math.floor(timeLeft / msPerHour);
+            
+            // Update the HTML
+            document.getElementById('months').textContent = months;
+            document.getElementById('weeks').textContent = weeks;
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+        }
+        
+        // Set custom message
+        function setCustomMessage(message) {
+            document.getElementById('custom-message').textContent = message;
+        }
+        
+        // Set custom target date
+        function setCustomTargetDate(year, month, day, hour = 0) {
+            // Note: month is 0-indexed (0 = January, 11 = December)
+            targetDate = new Date(year, month - 1, day, hour, 0, 0);
+            updateCountdown();
+        }
+        
+        // Initialize countdown
+        updateCountdown();
+        
+        // Update countdown every hour
+        setInterval(updateCountdown, 3600000);
+        
+        // For more frequent updates, use a shorter interval
+        // For example, to update every second:
+        // setInterval(updateCountdown, 1000);
+    </script>
 </body>
-<script>
-    const year = new Date().getFullYear();
-const myDate = new Date('Mar 15, 2025 00:00:00');
-console.log(myDate);
-
-// countdown
-let timer = setInterval(function() {
-
-  // get today's date
-  const today = new Date().getTime();
-
-  // get the difference
-  const diff = myDate - today;
-
-  // math
-  let dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-  let horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  let minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  let segundos = Math.floor((diff % (1000 * 60)) / 1000);
-
-  // display
-  document.getElementById("dias").innerHTML=dias
-  document.getElementById("horas").innerHTML=horas
-  document.getElementById("minutos").innerHTML=minutos
-  document.getElementById("segundos").innerHTML=segundos
-
-
-
-}, 1);
-</script>
 </html>
