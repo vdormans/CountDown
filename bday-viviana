@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: transparent;
+        }
+        
+        .countdown-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            color: white;
+        }
+        
+        .message {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .heart {
+            margin-left: 5px;
+        }
+        
+        .timer {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .time-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .time-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .time-label {
+            font-size: 0.8rem;
+        }
+        
+        .separator {
+            height: 40px;
+            width: 1px;
+            background-color: white;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown-container">
+        <div class="message">
+            <span id="custom-message">Cumple Viviana</span>
+            <span class="heart">♡</span>
+        </div>
+        <div class="timer">
+            <div class="time-section">
+                <div id="months" class="time-value">0</div>
+                <div class="time-label">Meses</div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <div class="time-section">
+                <div id="weeks" class="time-value">0</div>
+                <div class="time-label">Semanas</div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <div class="time-section">
+                <div id="days" class="time-value">0</div>
+                <div class="time-label">Días</div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <div class="time-section">
+                <div id="hours" class="time-value">0</div>
+                <div class="time-label">Horas</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== CONFIGURACIÓN SENCILLA =====
+        // Modifica estas variables para personalizar el contador
+        
+        // 1. Mensaje que se mostrará (ejemplo: "Cumple Viviana")
+        const MENSAJE = "Cumple Viviana"; 
+        
+        // 2. Fecha objetivo
+        // Formato: Año, Mes (1-12), Día, Hora (opcional), Minutos (opcional)
+        // Nota: En JavaScript los meses van de 0 a 11, pero aquí ya lo ajustamos para que sea más intuitivo (1=Enero, 12=Diciembre)
+        const FECHA = {
+            AÑO: 2025,
+            MES: 4,     // 1=Enero, 2=Febrero, ..., 12=Diciembre
+            DIA: 15,
+            HORA: 0,    // 0-23
+            MINUTOS: 0  // 0-59
+        };
+        // ===== FIN DE CONFIGURACIÓN =====
+        
+        
+        // Establece el mensaje personalizado
+        document.getElementById('custom-message').textContent = MENSAJE;
+        
+        // Construye la fecha objetivo (restamos 1 al mes para ajustar a la indexación de JavaScript)
+        const targetDate = new Date(
+            FECHA.AÑO, 
+            FECHA.MES - 1, 
+            FECHA.DIA, 
+            FECHA.HORA, 
+            FECHA.MINUTOS, 
+            0
+        );
+        
+        // Función para actualizar el contador
+        function updateCountdown() {
+            // Obtiene la fecha y hora actuales
+            const currentDate = new Date();
+            
+            // Calcula la diferencia en milisegundos
+            let timeLeft = targetDate - currentDate;
+            
+            // Si el contador llegó a cero, establece todo en cero
+            if (timeLeft <= 0) {
+                document.getElementById('months').textContent = '0';
+                document.getElementById('weeks').textContent = '0';
+                document.getElementById('days').textContent = '0';
+                document.getElementById('hours').textContent = '0';
+                return;
+            }
+            
+            // Calcula meses, semanas, días y horas
+            const msPerHour = 1000 * 60 * 60;
+            const msPerDay = msPerHour * 24;
+            const msPerWeek = msPerDay * 7;
+            const msPerMonth = msPerDay * 30.44; // Longitud promedio de un mes
+            
+            const months = Math.floor(timeLeft / msPerMonth);
+            timeLeft -= months * msPerMonth;
+            
+            const weeks = Math.floor(timeLeft / msPerWeek);
+            timeLeft -= weeks * msPerWeek;
+            
+            const days = Math.floor(timeLeft / msPerDay);
+            timeLeft -= days * msPerDay;
+            
+            const hours = Math.floor(timeLeft / msPerHour);
+            
+            // Actualiza el HTML
+            document.getElementById('months').textContent = months;
+            document.getElementById('weeks').textContent = weeks;
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+        }
+        
+        // Inicializa el contador
+        updateCountdown();
+        
+        // Actualiza el contador cada segundo
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
